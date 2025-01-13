@@ -29,13 +29,13 @@ def create_issue(project_id, summary, description):
     return None
 
 def update_issue(issue_id, commit_message):
-    url = f"{INSTANCE_URL}/api/issues/{issue_id}"
+    url = f"{INSTANCE_URL}/api/issues/{issue_id}/execute"  # Correct endpoint for executing transitions
     # Check if 'fix' is in the commit message to trigger an update
     if 'fix' in commit_message.lower():
         payload = {
-            "description": "Issue fixed, update based on commit message"
+            "command": "fixed"  # 'fixed' transition command
         }
-        response = requests.patch(url, headers=headers, json=payload)
+        response = requests.post(url, headers=headers, json=payload)
         if response.status_code == 200:
             print(f"Issue {issue_id} updated with 'fix' keyword.")
         else:
