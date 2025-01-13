@@ -28,22 +28,22 @@ def create_issue(project_id, summary, description):
         print(f"Failed to create issue: {response.status_code}, {response.text}")
     return None
 
-def update_issue(issue_id, commit_message):
-    url = f"{INSTANCE_URL}/api/issues/{issue_id}/transitions"  # Correct endpoint for applying transitions
-    # Check if 'fix' is in the commit message to trigger an update
-    if 'fix' in commit_message.lower():
-        payload = {
-            "transition": {
-                "name": "Fixed"  # YouTrack transition name (ensure it matches your setup)
-            }
-        }
-        response = requests.post(url, headers=headers, json=payload)
-        if response.status_code == 200:
-            print(f"Issue {issue_id} updated with 'fix' keyword.")
-        else:
-            print(f"Failed to update issue: {response.status_code}, {response.text}")
-    else:
-        print(f"No 'fix' keyword in commit message. No update triggered.")
+# def update_issue(issue_id, commit_message):
+#     url = f"{INSTANCE_URL}/api/issues/{issue_id}/transitions"  # Correct endpoint for applying transitions
+#     # Check if 'fix' is in the commit message to trigger an update
+#     if 'fix' in commit_message.lower():
+#         payload = {
+#             "transition": {
+#                 "name": "Fixed"  # YouTrack transition name (ensure it matches your setup)
+#             }
+#         }
+#         response = requests.post(url, headers=headers, json=payload)
+#         if response.status_code == 200:
+#             print(f"Issue {issue_id} updated with 'fix' keyword.")
+#         else:
+#             print(f"Failed to update issue: {response.status_code}, {response.text}")
+#     else:
+#         print(f"No 'fix' keyword in commit message. No update triggered.")
 
 def main():
     # Check if the commit message is passed as an argument
