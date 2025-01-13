@@ -1,4 +1,5 @@
 import requests
+import sys
 
 # Configuration
 INSTANCE_URL = "https://gemini3.myjetbrains.com/youtrack"  # Correct base URL
@@ -25,6 +26,19 @@ def create_issue(project_id, summary, description):
     else:
         print(f"Failed to create issue: {response.status_code}, {response.text}")
 
-# Replace '0-0' with your project ID
-create_issue("0-0", "Test Issue Summary", "This is a test description.")
+def main():
+    # Check if the commit message is passed as an argument
+    if len(sys.argv) > 1:
+        commit_message = sys.argv[1]
+        # Check if the commit message contains 'create issue'
+        if 'create issue' in commit_message.lower():
+            print(f"Commit message contains 'create issue'. Proceeding to create an issue...")
+            # Replace '0-0' with your project ID and create the issue
+            create_issue("0-0", "Test Issue Summary", "This is a test description.")
+        else:
+            print(f"Commit message does not contain 'create issue'. No issue created.")
+    else:
+        print("No commit message passed. Exiting.")
 
+if __name__ == "__main__":
+    main()
