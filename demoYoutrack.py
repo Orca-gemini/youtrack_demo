@@ -29,11 +29,13 @@ def create_issue(project_id, summary, description):
     return None
 
 def update_issue(issue_id, commit_message):
-    url = f"{INSTANCE_URL}/api/issues/{issue_id}/execute"  # Correct endpoint for executing transitions
+    url = f"{INSTANCE_URL}/api/issues/{issue_id}/transitions"  # Correct endpoint for applying transitions
     # Check if 'fix' is in the commit message to trigger an update
     if 'fix' in commit_message.lower():
         payload = {
-            "command": "fixed"  # 'fixed' transition command
+            "transition": {
+                "name": "Fixed"  # YouTrack transition name (ensure it matches your setup)
+            }
         }
         response = requests.post(url, headers=headers, json=payload)
         if response.status_code == 200:
